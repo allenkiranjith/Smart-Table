@@ -9,6 +9,7 @@
 - Set "sort-ascent"/"sort-descent" class on `<th>`'s directly (rather than on the `<span>` inside them)
 - Removed `isGlobalSearchActivated` flag
 - Added Fixed subHeader functionality
+- Added 'customMultiple' selection mode, which is the same as 'multiple', but does not select the row when the user clicks on it
 
 ### Events
 
@@ -30,7 +31,7 @@ scope.$on('sortColumn', function (event, column) {
 
 ## How to use Smart-Table
 
-1. Install smart table: `npm install --save git://github.com/turn/Smart-Table.git#v0.3.8`
+1. Install smart table: `npm install --save git://github.com/turn/Smart-Table.git#v0.3.12`
 2. Then require it in your module:
 
 ```js
@@ -143,7 +144,7 @@ grunt watch
 npm link
 
 cd Foo
-npm install --save git://github.com/turn/Smart-Table.git#v0.3.8
+npm install --save git://github.com/turn/Smart-Table.git#v0.3.12
 npm link Smart-Table
 ```
 

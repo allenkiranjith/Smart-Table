@@ -9,6 +9,7 @@
 - Set "sort-ascent"/"sort-descent" class on `<th>`'s directly (rather than on the `<span>` inside them)
 - Removed `isGlobalSearchActivated` flag
 - Added Fixed subHeader functionality
+- Added 'customMultiple' selection mode, which is the same as 'multiple', but does not select the row when the user clicks on it
 
 ### Events
 

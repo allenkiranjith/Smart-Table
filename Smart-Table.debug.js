@@ -148,8 +148,11 @@
                                     .removeClass('selected')
                             }
                         }
-                        element.toggleClass('selected');
-                        ctrl.toggleSelection(scope.dataRow);
+                        if (scope.selectionMode !== 'customMultiple') {
+                            element.toggleClass('selected');
+                            ctrl.toggleSelection(scope.dataRow);
+                            ctrl.previouslySelectedIndex = index;
+                        }
                     });
                 }
             };
@@ -421,8 +424,16 @@
             scope.currentPage = 1;
             scope.holder = {isAllSelected: false};
 
+            // index of last row that was selected
+            this.previouslySelectedIndex = null;
+
             var predicate = {},
                 lastColumnSort;
+
+            function isModeMultiple() {
+                return scope.selectionMode === 'multiple' 
+                    || scope.selectionMode === 'customMultiple';
+            }
 
             function isAllSelected() {
                 var i,
@@ -456,7 +467,8 @@
 
                 var dataRow, oldValue;
 
-                if ((!angular.isArray(array)) || (selectionMode !== 'multiple' && selectionMode !== 'single')) {
+                if ((!angular.isArray(array)) || (selectionMode !== 'multiple' 
+                    && selectionMode !== 'single' && selectionMode !== 'customMultiple')) {
                     return;
                 }
 
@@ -474,7 +486,6 @@
                     }
                     dataRow.isSelected = select;
                     scope.holder.isAllSelected = isAllSelected();
-                    scope.$emit('selectionChange', {item: dataRow});
                 }
             }
 
@@ -608,7 +619,24 @@
                 var index = scope.dataCollection.indexOf(dataRow);
                 if (index !== -1) {
                     selectDataRow(scope.dataCollection, scope.selectionMode, index, dataRow.isSelected !== true);
+                    scope.$emit('selectionChange', {item: dataRow});
                 }
+            };
+
+            /**
+             * select/unselect the rows within the given range
+             * @param start starting index of range
+             * @param end ending index of range (inclusive)
+             * @param value if true select, else unselect
+             */
+            this.toggleSelectionMultiple = function (start, end, value) {
+                if (!isModeMultiple()) {
+                    return;
+                }
+                for (var i = start; i <= end; i++) {
+                    selectDataRow(scope.displayedCollection, scope.selectionMode, i, value === true);
+                }
+                scope.$emit('selectionChange', {items: scope.displayedCollection.slice(start, end + 1)});
             };
 
             /**
@@ -618,13 +646,7 @@
             this.toggleSelectionAll = function (value) {
                 var i = 0,
                     l = scope.displayedCollection.length;
-
-                if (scope.selectionMode !== 'multiple') {
-                    return;
-                }
-                for (; i < l; i++) {
-                    selectDataRow(scope.displayedCollection, scope.selectionMode, i, value === true);
-                }
+                this.toggleSelectionMultiple(i, l - 1, value);
             };
 
             /**

@@ -95,8 +95,11 @@
                                     .removeClass('selected')
                             }
                         }
-                        element.toggleClass('selected');
-                        ctrl.toggleSelection(scope.dataRow);
+                        if (scope.selectionMode !== 'customMultiple') {
+                            element.toggleClass('selected');
+                            ctrl.toggleSelection(scope.dataRow);
+                            ctrl.previouslySelectedIndex = index;
+                        }
                     });
                 }
             };
