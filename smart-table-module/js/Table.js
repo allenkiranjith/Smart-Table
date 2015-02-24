@@ -113,6 +113,15 @@
             };
 
             /**
+             * assign defaultSortColumn object to lastColumnSort (only if it is not initialized)
+             * @method setDefaultSortColumn
+             * @param column
+             */
+            function setDefaultSortColumn (defaultSortColumn) {
+                lastColumnSort = (angular.isObject(lastColumnSort)) ? lastColumnSort : defaultSortColumn;
+            }
+
+            /**
              * set column as the column used to sort the data (if it is already the case, it will change the reverse value)
              * @method sortBy
              * @param column
@@ -176,11 +185,15 @@
 
             /**
              * insert a new column in scope.collection at index or push at the end if no index
+             * call setDefaultSortColumn function for assigning pre-sorted column object (identified by column's reverse value) to lastColumnSort
              * @param columnConfig column configuration used to instantiate the new Column
              * @param index where to insert the column (at the end if not specified)
              */
             this.insertColumn = function (columnConfig, index) {
                 var column = new Column(columnConfig);
+                if (angular.isDefined(column.reverse)) {
+                  setDefaultSortColumn(column);
+                }
                 arrayUtility.insertAt(scope.columns, index, column);
             };
 

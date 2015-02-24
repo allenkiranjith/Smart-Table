@@ -10,6 +10,8 @@
 - Removed `isGlobalSearchActivated` flag
 - Added Fixed subHeader functionality
 - Added 'customMultiple' selection mode, which is the same as 'multiple', but does not select the row when the user clicks on it
+- Provide attribute 'reverse' with value either 'true' or 'false' in the column configuration for pre-sorted column to show respective sorting icon
+- Set lastColumnSort to a column object if it is already sorted based on it's reverse attribute assigned in column configuration
 
 ### Events
 
