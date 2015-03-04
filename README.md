@@ -10,6 +10,8 @@
 - Removed `isGlobalSearchActivated` flag
 - Added Fixed subHeader functionality
 - Added 'customMultiple' selection mode, which is the same as 'multiple', but does not select the row when the user clicks on it
+- Provide attribute 'reverse' with value either 'true' or 'false' in the column configuration for pre-sorted column to show respective sorting icon
+- Set lastColumnSort to a column object if it is already sorted based on it's reverse attribute assigned in column configuration
 
 ### Events
 
@@ -31,7 +33,7 @@ scope.$on('sortColumn', function (event, column) {
 
 ## How to use Smart-Table
 
-1. Install smart table: `npm install --save git://github.com/turn/Smart-Table.git#v0.3.12`
+1. Install smart table: `npm install --save git://github.com/turn/Smart-Table.git#v0.3.13`
 2. Then require it in your module:
 
 ```js
@@ -144,7 +146,7 @@ grunt watch
 npm link
 
 cd Foo
-npm install --save git://github.com/turn/Smart-Table.git#v0.3.12
+npm install --save git://github.com/turn/Smart-Table.git#v0.3.13
 npm link Smart-Table
 ```
 
